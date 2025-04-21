@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
 	standalone: false,
@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './left-sidebar.component.css'
 })
 export class LeftSidebarComponent {
+	isLeftSidebarCollapsed = input.required<boolean>();
+	changeIsLeftSidebarCollapsed = output<boolean>();
 	items = [
 		{ 
 			routeLink: 'xml-upload',
@@ -44,4 +46,12 @@ export class LeftSidebarComponent {
 			label: 'Ergebnisse',
 		},
 	]
+
+	toggleCollapse(): void {
+		this.changeIsLeftSidebarCollapsed.emit(!this.isLeftSidebarCollapsed());
+	}
+
+	closeSidenav(): void {
+		this.changeIsLeftSidebarCollapsed.emit(true);
+	}
 }
