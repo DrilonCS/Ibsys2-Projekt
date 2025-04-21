@@ -44,4 +44,11 @@ export class NavigationProgressService {
   public getCurrentProgressIndex(): number {
     return this.currentProgressIndex();
   }
+
+	public completeCurrentStep(): void {
+		const currentIndex = this.currentProgressIndex();
+		if (currentIndex < this.ROUTE_SEQUENCE.length - 1) {
+			this.currentProgressIndex.set(currentIndex + 1);
+		}
+	}
 }

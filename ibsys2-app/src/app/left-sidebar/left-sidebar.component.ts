@@ -74,7 +74,7 @@ export class LeftSidebarComponent implements OnInit {
 		if (item.routeLink === 'xml-upload') {
 			return true;
 		}
-		return item.step <= this.currentProgressIndex;
+		return item.steps <= this.currentProgressIndex;
 	}
 
 	toggleCollapse(): void {

@@ -1,1 +1,40 @@
-<p>XML-Datei hochladen</p>
+<div class="upload-container">
+  <h2>XML-Datei hochladen</h2>
+  
+  <div class="upload-area">
+    <input 
+      type="file" 
+      class="file-input" 
+      (change)="onFileSelected($event)" 
+      accept=".xml"
+      #fileUpload>
+      
+    <div class="upload-ui">
+      <button 
+        class="btn btn-primary" 
+        (click)="fileUpload.click()">
+        <i class="fas fa-file-upload"></i> Datei auswählen
+      </button>
+      <span class="file-name" *ngIf="fileName()">{{ fileName() }}</span>
+    </div>
+  </div>
+
+  <div class="validation-result" *ngIf="isUploading() || isFileValid() !== null">
+    <div *ngIf="isUploading()" class="progress-container">
+      <div class="progress-bar"></div>
+    </div>
+    
+    <div *ngIf="isFileValid() === true" class="valid-result">
+      <i class="fas fa-check-circle success-icon"></i>
+      <span>Die XML-Datei ist gültig.</span>
+      <button class="btn btn-primary" (click)="proceedToNextStep()">
+        <i class="fas fa-arrow-right"></i> Weiter zum Produktionsprogramm
+      </button>
+    </div>
+    
+    <div *ngIf="isFileValid() === false" class="invalid-result">
+      <i class="fas fa-exclamation-circle error-icon"></i>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  </div>
+</div>
