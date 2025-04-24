@@ -1,5 +1,6 @@
 import { Component, effect, input, OnInit, output } from '@angular/core';
 import { NavigationProgressService } from '../../services/navigation-progress.service';
+import { Router } from '@angular/router';
 
 @Component({
 	standalone: false,
@@ -59,7 +60,10 @@ export class LeftSidebarComponent implements OnInit {
 		},
 	];
 
-	constructor(private readonly navigationProgressService: NavigationProgressService) {
+	constructor(
+		private readonly navigationProgressService: NavigationProgressService,
+		private router: Router
+	) {
 		effect(() => {
 			const accessibleRoutes = this.navigationProgressService.accessibleRoutes();
 			this.currentProgressIndex = accessibleRoutes.length - 1;
@@ -83,5 +87,36 @@ export class LeftSidebarComponent implements OnInit {
 
 	closeSidenav(): void {
 		this.changeIsLeftSidebarCollapsed.emit(true);
+	}
+
+	navigateToPreviousStep(event: MouseEvent): void {
+		event.preventDefault();
+		event.stopPropagation();
+
+		const currentIndex = this.navigationProgressService.getCurrentProgressIndex();
+		if (currentIndex > 0) {
+			const previousRoute = this.items[currentIndex - 1].routeLink;
+			this.router.navigate([`/${previousRoute}`]);
+		}
+	}
+
+	navigateToNextStep(event: MouseEvent): void {
+		event.preventDefault();
+		event.stopPropagation();
+
+		const currentIndex = this.navigationProgressService.getCurrentProgressIndex();
+		if (currentIndex < this.items.length - 1 && this.isItemAccessible(this.items[currentIndex + 1])) {
+			const nextRoute = this.items[currentIndex + 1].routeLink;
+			this.router.navigate([`/${nextRoute}`]);
+		}
+	}
+
+	navigateToRoute(item: any, event: MouseEvent): void {
+		event.preventDefault();
+		event.stopPropagation();
+
+		if (this.isItemAccessible(item)) {
+			this.router.navigate([`/${item.routeLink}`]);
+		}
 	}
 }

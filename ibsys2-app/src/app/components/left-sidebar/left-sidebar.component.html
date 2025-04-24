@@ -15,7 +15,10 @@
 		<li class="sidenav-nav-item">
 			<a class="sidenav-nav-link" [routerLink]="isItemAccessible(item) ? item.routeLink : null"
 				routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-				(click)="$event.preventDefault(); $event.stopPropagation();" [class.disabled-link]="!isItemAccessible(item)">
+				(click)="navigateToRoute(item, $event)"
+				(contextmenu)="navigateToNextStep($event)"
+				(auxclick)="$event.button === 1 && navigateToPreviousStep($event)"
+				[class.disabled-link]="!isItemAccessible(item)">
 				<i class="sidenav-link-icon" [class]="item.icon"></i>
 				@if (!isLeftSidebarCollapsed()) {
 				  @if (!isItemAccessible(item)) {

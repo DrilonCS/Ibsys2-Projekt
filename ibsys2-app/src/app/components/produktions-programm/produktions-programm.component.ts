@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ForecastData, InputDataService} from '../../services/input-data.service';
+import {Router} from '@angular/router';
+import {NavigationProgressService} from '../../services/navigation-progress.service';
 
 @Component({
   selector: 'app-produktions-programm',
@@ -18,7 +20,12 @@ export class ProduktionsProgrammComponent implements OnInit {
     {key: 'p3', label: 'Herrenrad'},
   ];
 
-  constructor(private fb: FormBuilder, private inputService: InputDataService) {
+  constructor(
+    private fb: FormBuilder,
+    private inputService: InputDataService,
+    private router: Router,
+    private navigationProgressService: NavigationProgressService
+  ) {
   }
 
   ngOnInit(): void {
@@ -48,5 +55,16 @@ export class ProduktionsProgrammComponent implements OnInit {
     return this.products.reduce((sum, p) => {
       return sum + Number(this.forecastForm.get(`produktion_${p.key}_p${period}`)?.value || 0);
     }, 0);
+  }
+
+  saveAndNavigate(): void {
+    // Here you would typically save the form data
+    // For example: this.inputService.saveForecast(this.forecastForm.value);
+
+    // Complete the current step to enable the next step
+    this.navigationProgressService.completeCurrentStep();
+
+    // Navigate to materialplanung
+    this.router.navigate(['/materialplanung']);
   }
 }
