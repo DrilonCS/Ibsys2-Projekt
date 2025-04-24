@@ -1,5 +1,5 @@
 import { Component, effect, input, OnInit, output } from '@angular/core';
-import { NavigationProgressService } from '../services/navigation-progress.service';
+import { NavigationProgressService } from '../../services/navigation-progress.service';
 
 @Component({
 	standalone: false,

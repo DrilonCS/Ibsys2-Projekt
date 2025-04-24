@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { XMLValidationService } from '../services/xml-validation.service';
-import { NavigationProgressService } from '../services/navigation-progress.service';
+import { XMLValidationService } from '../../services/xml-validation.service';
+import { NavigationProgressService } from '../../services/navigation-progress.service';
 
 @Component({
 	selector: 'app-xmlupload',

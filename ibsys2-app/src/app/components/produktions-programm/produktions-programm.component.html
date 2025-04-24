@@ -1,0 +1,60 @@
+<div style="padding: 1rem; max-width: 900px; margin: auto;">
+  <h2>Produktionsplanung</h2>
+  <form [formGroup]="forecastForm">
+    <table>
+      <thead>
+      <tr>
+        <th>Produkt \ Periode</th>
+        <th colspan="2">1</th>
+        <th colspan="2">2</th>
+        <th colspan="2">3</th>
+        <th colspan="2">4</th>
+      </tr>
+      <tr>
+        <th></th>
+        <ng-container *ngFor="let period of [1,2,3,4]">
+          <th>Verkauf</th>
+          <th>Produktion</th>
+        </ng-container>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.label }}</td>
+        <ng-container *ngFor="let period of [1,2,3,4]">
+          <td>
+            <input
+              type="number"
+              formControlName="verkauf_{{ product.key }}_p{{ period }}"
+              [readonly]="period === 1"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              formControlName="produktion_{{ product.key }}_p{{ period }}"
+            />
+          </td>
+
+        </ng-container>
+      </tr>
+      <tr>
+        <td>Summe</td>
+        <ng-container *ngFor="let period of [1,2,3,4]">
+          <td colspan="2">{{ getTotal(period) }}</td>
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:2rem">Direktverkauf</h3>
+    <div *ngFor="let product of products" style="margin-bottom: 1rem;">
+      <strong>{{ product.label }}</strong>
+      <div style="display:flex; gap:1rem;">
+        <label>Betrag <input type="number" formControlName="dir_betrag_{{product.key}}" /></label>
+        <label>Preis <input type="number" formControlName="dir_preis_{{product.key}}" /></label>
+        <label>Strafe <input type="number" formControlName="dir_strafe_{{product.key}}" /></label>
+      </div>
+    </div>
+  </form>
+</div>

@@ -3,16 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
-import { MainComponent } from './main/main.component';
-import { XMLUploadComponent } from './xmlupload/xmlupload.component';
-import { ProduktionsProgrammComponent } from './produktions-programm/produktions-programm.component';
-import { MaterialPlanungComponent } from './material-planung/material-planung.component';
-import { KapazitaetsplanungComponent } from './kapazitaetsplanung/kapazitaetsplanung.component';
-import { BeschaffungsplanungComponent } from './beschaffungsplanung/beschaffungsplanung.component';
-import { ProduktionsplanungComponent } from './produktionsplanung/produktionsplanung.component';
-import { ErgebnisseComponent } from './ergebnisse/ergebnisse.component';
-import { RouterModule } from '@angular/router';
+import { LeftSidebarComponent } from './components/left-sidebar/left-sidebar.component';
+import { MainComponent } from './components/main/main.component';
+import { XMLUploadComponent } from './components/xmlupload/xmlupload.component';
+import { ProduktionsProgrammComponent } from './components/produktions-programm/produktions-programm.component';
+import { MaterialPlanungComponent } from './components/material-planung/material-planung.component';
+import { KapazitaetsplanungComponent } from './components/kapazitaetsplanung/kapazitaetsplanung.component';
+import { BeschaffungsplanungComponent } from './components/beschaffungsplanung/beschaffungsplanung.component';
+import { ProduktionsplanungComponent } from './components/produktionsplanung/produktionsplanung.component';
+import { ErgebnisseComponent } from './components/ergebnisse/ergebnisse.component';
+import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -26,10 +27,13 @@ import { RouterModule } from '@angular/router';
     BeschaffungsplanungComponent,
     ProduktionsplanungComponent,
     ErgebnisseComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

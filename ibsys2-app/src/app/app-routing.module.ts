@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BeschaffungsplanungComponent } from './beschaffungsplanung/beschaffungsplanung.component';
-import { ErgebnisseComponent } from './ergebnisse/ergebnisse.component';
-import { MaterialPlanungComponent } from './material-planung/material-planung.component';
-import { ProduktionsProgrammComponent } from './produktions-programm/produktions-programm.component';
-import { XMLUploadComponent } from './xmlupload/xmlupload.component';
-import { KapazitaetsplanungComponent } from './kapazitaetsplanung/kapazitaetsplanung.component';
-import { ProduktionsplanungComponent } from './produktionsplanung/produktionsplanung.component';
-import { sequentialRouteGuard } from './guards/sequential-route.guard';
+import { BeschaffungsplanungComponent } from './components/beschaffungsplanung/beschaffungsplanung.component';
+import { ErgebnisseComponent } from './components/ergebnisse/ergebnisse.component';
+import { MaterialPlanungComponent } from './components/material-planung/material-planung.component';
+import { ProduktionsProgrammComponent } from './components/produktions-programm/produktions-programm.component';
+import { XMLUploadComponent } from './components/xmlupload/xmlupload.component';
+import { KapazitaetsplanungComponent } from './components/kapazitaetsplanung/kapazitaetsplanung.component';
+import { ProduktionsplanungComponent } from './components/produktionsplanung/produktionsplanung.component';
+import { sequentialRouteGuard } from './components/guards/sequential-route.guard';
 
 const routes: Routes = [
 	{
