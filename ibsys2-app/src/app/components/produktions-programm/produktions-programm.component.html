@@ -1,60 +1,89 @@
-<div style="padding: 1rem; max-width: 900px; margin: auto;">
-  <h2>Produktionsplanung</h2>
-  <form [formGroup]="forecastForm">
-    <table>
-      <thead>
-      <tr>
-        <th>Produkt \ Periode</th>
-        <th colspan="2">1</th>
-        <th colspan="2">2</th>
-        <th colspan="2">3</th>
-        <th colspan="2">4</th>
-      </tr>
-      <tr>
-        <th></th>
-        <ng-container *ngFor="let period of [1,2,3,4]">
-          <th>Verkauf</th>
-          <th>Produktion</th>
-        </ng-container>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.label }}</td>
-        <ng-container *ngFor="let period of [1,2,3,4]">
-          <td>
-            <input
-              type="number"
-              formControlName="verkauf_{{ product.key }}_p{{ period }}"
-              [readonly]="period === 1"
-            />
-          </td>
-          <td>
-            <input
-              type="number"
-              formControlName="produktion_{{ product.key }}_p{{ period }}"
-            />
-          </td>
+<div class="produktions-container">
+  <div class="header-container">
+    <h2 class="section-title"><i class="fal fa-industry"></i> Produktionsplanung</h2>
+  </div>
 
-        </ng-container>
-      </tr>
-      <tr>
-        <td>Summe</td>
-        <ng-container *ngFor="let period of [1,2,3,4]">
-          <td colspan="2">{{ getTotal(period) }}</td>
-        </ng-container>
-      </tr>
-      </tbody>
-    </table>
-
-    <h3 style="margin-top:2rem">Direktverkauf</h3>
-    <div *ngFor="let product of products" style="margin-bottom: 1rem;">
-      <strong>{{ product.label }}</strong>
-      <div style="display:flex; gap:1rem;">
-        <label>Betrag <input type="number" formControlName="dir_betrag_{{product.key}}" /></label>
-        <label>Preis <input type="number" formControlName="dir_preis_{{product.key}}" /></label>
-        <label>Strafe <input type="number" formControlName="dir_strafe_{{product.key}}" /></label>
+  <div class="content-container">
+    <form [formGroup]="forecastForm">
+      <div class="table-container">
+        <table class="produktions-table">
+          <thead>
+            <tr>
+              <th class="header-cell">Produkt \ Periode</th>
+              <th class="header-cell period-header" colspan="2">1</th>
+              <th class="header-cell period-header" colspan="2">2</th>
+              <th class="header-cell period-header" colspan="2">3</th>
+              <th class="header-cell period-header" colspan="2">4</th>
+            </tr>
+            <tr>
+              <th class="header-cell"></th>
+              @for (period of [1,2,3,4]; track period) {
+                <th class="header-cell sub-header">Verkauf</th>
+                <th class="header-cell sub-header">Produktion</th>
+              }
+            </tr>
+          </thead>
+          <tbody>
+            @for (product of products; track product.key) {
+              <tr>
+                <td class="product-cell">{{ product.label }}</td>
+                @for (period of [1,2,3,4]; track period) {
+                  <td class="data-cell">
+                    <input
+                      class="input-field"
+                      type="number"
+                      formControlName="verkauf_{{ product.key }}_p{{ period }}"
+                      [readonly]="period === 1"
+                      [class.readonly-input]="period === 1"
+                    />
+                  </td>
+                  <td class="data-cell">
+                    <input
+                      class="input-field"
+                      type="number"
+                      formControlName="produktion_{{ product.key }}_p{{ period }}"
+                    />
+                  </td>
+                }
+              </tr>
+            }
+            <tr class="total-row">
+              <td class="total-label">Summe</td>
+              @for (period of [1,2,3,4]; track period) {
+                <td class="total-cell" colspan="2">{{ getTotal(period) }}</td>
+              }
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  </form>
+
+      <div class="direktverkauf-container">
+        <h3 class="subsection-title"><i class="fal fa-shopping-cart"></i> Direktverkauf</h3>
+        <div class="direktverkauf-grid">
+          @for (product of products; track product.key) {
+            <div class="product-card">
+              <div class="product-header">
+                <i class="fal fa-bicycle"></i>
+                <span>{{ product.label }}</span>
+              </div>
+              <div class="product-inputs">
+                <div class="input-group">
+                  <label class="input-label">Betrag</label>
+                  <input class="input-field" type="number" formControlName="dir_betrag_{{product.key}}" />
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Preis</label>
+                  <input class="input-field" type="number" formControlName="dir_preis_{{product.key}}" />
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Strafe</label>
+                  <input class="input-field" type="number" formControlName="dir_strafe_{{product.key}}" />
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

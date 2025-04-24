@@ -1,11 +1,166 @@
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
+.produktions-container {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: Arial, sans-serif;
 }
 
-th, td {
-  border: 1px solid #ccc;
+.header-container {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  color: #012a5b;
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-title i {
+  font-size: 1.5rem;
+}
+
+.content-container {
+  background-color: #fff;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.produktions-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.063rem 0.125rem rgba(0, 0, 0, 0.05);
+}
+
+.header-cell {
+  background-color: #012a5b;
+  color: white;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.period-header {
+  background-color: #023e7d;
+}
+
+.sub-header {
+  background-color: #034f99;
+}
+
+.product-cell {
+  background-color: #f3f3f3;
+  font-weight: 600;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.data-cell {
   padding: 0.5rem;
   text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.input-field:focus {
+  border-color: #012a5b;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(1, 42, 91, 0.2);
+}
+
+.readonly-input {
+  background-color: #f3f3f3;
+  cursor: not-allowed;
+}
+
+.total-row {
+  background-color: #f3f3f3;
+}
+
+.total-label {
+  font-weight: 700;
+  text-align: right;
+  padding: 0.75rem;
+}
+
+.total-cell {
+  font-weight: 700;
+  padding: 0.75rem;
+  text-align: center;
+  background-color: #e6f0ff;
+}
+
+.direktverkauf-container {
+  margin-top: 2rem;
+}
+
+.subsection-title {
+  color: #012a5b;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.direktverkauf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+}
+
+.product-header {
+  background-color: #012a5b;
+  color: white;
+  padding: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.product-inputs {
+  padding: 1rem;
+}
+
+.input-group {
+  margin-bottom: 0.75rem;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+  color: #333;
 }
