@@ -1,1 +1,118 @@
-<p>Materialplanung</p>
+<div class="material-container">
+  <div class="header-container">
+    <h2 class="section-title"><i class="fal fa-boxes"></i> Materialplanung</h2>
+  </div>
+
+  <div class="content-container">
+    <!-- Loading and Error States -->
+    <div *ngIf="isLoading" class="loading-container">
+      <p><i class="fal fa-spinner fa-spin"></i> Daten werden geladen...</p>
+    </div>
+
+    <div *ngIf="hasError" class="error-container">
+      <p><i class="fal fa-exclamation-triangle"></i> {{ errorMessage }}</p>
+    </div>
+
+    <!-- Main Content -->
+    <div *ngIf="!isLoading && !hasError" class="material-content">
+      <!-- Tabs for Products -->
+      <div class="tabs-container">
+        <div class="tabs">
+          <button
+            *ngFor="let product of products"
+            class="tab-button"
+            [class.active]="activeTab === product.key"
+            (click)="setActiveTab(product.key)">
+            {{ product.label }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Material Requirements Table -->
+      <div class="table-container">
+        <table class="material-table">
+          <thead>
+            <tr>
+              <th class="header-cell">Bauteil-ID</th>
+              <th class="header-cell">Produktionsauftrag</th>
+              <th class="header-cell">Vorherige Warteschlange</th>
+              <th class="header-cell">Sicherheitsbestand</th>
+              <th class="header-cell">Lagerbestand</th>
+              <th class="header-cell">Warteschlange</th>
+              <th class="header-cell">Laufende Arbeiten</th>
+              <th class="header-cell">Berechneter Bedarf</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let requirement of materialRequirements[activeTab]; let i = index">
+              <td class="component-cell">{{ requirement.id }}</td>
+              <td class="data-cell">
+                <input class="input-field readonly-input" type="number" [value]="requirement.productionOrder" readonly />
+              </td>
+              <td class="data-cell">
+                <input class="input-field readonly-input" type="number" [value]="requirement.previousQueue" readonly />
+              </td>
+              <td class="data-cell">
+                <input
+                  class="input-field"
+                  type="number"
+                  [value]="requirement.safetyStock"
+                  (input)="updateSafetyStock(i, $event)" />
+              </td>
+              <td class="data-cell">
+                <input class="input-field readonly-input" type="number" [value]="requirement.warehouseStock" readonly />
+              </td>
+              <td class="data-cell">
+                <input class="input-field readonly-input" type="number" [value]="requirement.currentQueue" readonly />
+              </td>
+              <td class="data-cell">
+                <input class="input-field readonly-input" type="number" [value]="requirement.workInProgress" readonly />
+              </td>
+              <td class="data-cell" [class.negative-value]="isNegative(requirement.calculatedRequirement)">
+                <input
+                  class="input-field readonly-input"
+                  [class.negative-input]="isNegative(requirement.calculatedRequirement)"
+                  type="number"
+                  [value]="requirement.calculatedRequirement"
+                  readonly />
+              </td>
+            </tr>
+            <!-- No data message -->
+            <tr *ngIf="!materialRequirements[activeTab] || materialRequirements[activeTab].length === 0">
+              <td colspan="8" class="no-data-cell">Keine Daten verfügbar für dieses Produkt.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Formula Explanation -->
+      <div class="formula-container">
+        <h3 class="subsection-title"><i class="fal fa-calculator"></i> Berechnungsformel</h3>
+        <div class="formula-display">
+          <div class="formula-element">Berechneter Bedarf = </div>
+          <div class="formula-element">Produktionsauftrag</div>
+          <div class="formula-operator">+</div>
+          <div class="formula-element">Vorherige Warteschlange</div>
+          <div class="formula-operator">+</div>
+          <div class="formula-element">Sicherheitsbestand</div>
+          <div class="formula-operator">-</div>
+          <div class="formula-element">Lagerbestand</div>
+          <div class="formula-operator">-</div>
+          <div class="formula-element">Warteschlange</div>
+          <div class="formula-operator">-</div>
+          <div class="formula-element">Laufende Arbeiten</div>
+        </div>
+        <div class="formula-note">
+          <i class="fal fa-info-circle"></i> Hinweis: Der Sicherheitsbestand wird standardmäßig als 50% des Produktionsauftrags berechnet, kann aber manuell angepasst werden.
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div class="button-container">
+        <button type="button" class="save-button" (click)="saveAndNavigate()">
+          <i class="fal fa-save"></i> Speichern und weiter zur Kapazitätsplanung
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
