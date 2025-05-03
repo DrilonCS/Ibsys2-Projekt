@@ -40,13 +40,23 @@ export class ProduktionsProgrammComponent implements OnInit {
       this.forecastForm.addControl(`dir_strafe_${p.key}`, this.fb.control(0));
     }
 
+    // Always get the forecast data for reference
     this.inputService.getForecast().subscribe((data) => {
       this.forecastData = data;
-      for (let p of this.products) {
-        this.forecastForm.patchValue({
-          [`verkauf_${p.key}_p1`]: data[p.key as keyof ForecastData],
-          [`produktion_${p.key}_p1`]: data[p.key as keyof ForecastData]
-        });
+
+      // Check if there's saved production program data
+      const savedData = this.inputService.getProductionProgramData();
+      if (savedData) {
+        // If there's saved data, use it to populate the form
+        this.forecastForm.patchValue(savedData);
+      } else {
+        // If there's no saved data, use the forecast data from the XML
+        for (let p of this.products) {
+          this.forecastForm.patchValue({
+            [`verkauf_${p.key}_p1`]: data[p.key as keyof ForecastData],
+            [`produktion_${p.key}_p1`]: data[p.key as keyof ForecastData]
+          });
+        }
       }
     });
   }
@@ -58,8 +68,8 @@ export class ProduktionsProgrammComponent implements OnInit {
   }
 
   saveAndNavigate(): void {
-    // Here you would typically save the form data
-    // For example: this.inputService.saveForecast(this.forecastForm.value);
+    // Save the form data to the service
+    this.inputService.saveProductionProgramData(this.forecastForm.value);
 
     // Complete the current step to enable the next step
     this.navigationProgressService.completeCurrentStep();

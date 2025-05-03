@@ -64,6 +64,8 @@ export const SAFETY_STOCK = {
 export class InputDataService {
   private xmlData: Document | null = null;
   private xmlCache$ = new ReplaySubject<Document>(1);
+  public safetyStockMap = new Map<string, string>();
+  private productionProgramData: any = null;
 
   constructor(private http: HttpClient) {}
 
@@ -179,9 +181,24 @@ export class InputDataService {
           const inWork = ordersInWork.find(item => item.id.toString() === componentId.replace('E', '')) ||
                         { amount: 0 };
 
-          // Calculate safety stock as 50% of the production order (forecast)
-          const safetyStock = Math.round(productionOrder * safetyFactor);
+          // Calculate safety stock using the new formula
           const previousQueue = 0; // This would need to be retrieved from previous period data
+
+          // New safety stock formula: -salesOrder - previousWaitingQueue + stock + waitingQueue + workInProgress + productionWish
+          const c =
+            -productionOrder -
+            previousQueue +
+            stock.amount +
+            queue.timeneed +
+            inWork.amount +
+            0; // productionWish is set to 0 for now, can be adjusted as needed
+
+          // Store the calculated safety stock in the map
+          const key = componentId;
+          this.safetyStockMap.set(key, c.toString());
+
+          // Use the calculated value as safety stock
+          const safetyStock = Math.round(c);
 
           // Calculate requirement using the formula:
           // Produktionsauftrag + vorherige Warteschlange + Sicherheitsbestand - Lagerbestand - aktuelle Warteschlange - laufende Arbeiten
@@ -254,5 +271,15 @@ export class InputDataService {
     });
 
     return result;
+  }
+
+  // Save production program data
+  saveProductionProgramData(data: any): void {
+    this.productionProgramData = data;
+  }
+
+  // Get saved production program data
+  getProductionProgramData(): any {
+    return this.productionProgramData;
   }
 }
