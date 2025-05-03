@@ -4,6 +4,19 @@
   margin: 0 auto;
 }
 
+.header-container {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  color: #012a5b;
+  font-size: 1.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .upload-area {
   margin: 24px 0;
   padding: 32px;
